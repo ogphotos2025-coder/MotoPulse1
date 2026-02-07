@@ -3,6 +3,26 @@
 // Configuration
 const SMS_SERVER_URL = 'http://localhost:3000'; // URL for the SMS backend server
 
+// DOM Elements for Share Location
+const shareLocationBtn = document.getElementById('share-location-btn');
+const shareLocationModal = document.getElementById('share-location-modal');
+const modalCloseButtons = shareLocationModal ? shareLocationModal.querySelectorAll('.close-button') : [];
+const contactSearchInput = document.getElementById('contact-search');
+const contactListContainer = document.getElementById('contact-list');
+const shareSelectedBtn = document.getElementById('share-selected-btn');
+
+// Dummy Contacts (replace with actual data from a backend later)
+const DUMMY_CONTACTS = [
+    { id: 'c1', name: 'Alice Smith', phone: '+11234567890' },
+    { id: 'c2', name: 'Bob Johnson', phone: '+11234567891' },
+    { id: 'c3', name: 'Charlie Brown', phone: '+11234567892' },
+    { id: 'c4', name: 'Diana Prince', phone: '+11234567893' },
+    { id: 'c5', name: 'Clark Kent', phone: '+11234567894' },
+    { id: 'c6', name: 'Bruce Wayne', phone: '+11234567895' },
+    { id: 'c7', name: 'Selina Kyle', phone: '+11234567896' },
+    { id: 'c8', name: 'Arthur Curry', phone: '+11234567897' }
+];
+
 // State Management
 const AppState = {
     currentRide: null,
@@ -22,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeFlightPlanForm();
     initializeActiveRidePanel();
     initializeBattleMap();
+    initializeShareLocation(); // Call the new initialization function
     renderStats();
     renderHistory();
     
@@ -585,6 +606,74 @@ function formatDate(date) {
         day: 'numeric',
         year: 'numeric'
     });
+}
+
+// Initialize Share Location feature
+function initializeShareLocation() {
+    if (!shareLocationBtn || !shareLocationModal) return;
+
+    shareLocationBtn.addEventListener('click', () => {
+        shareLocationModal.classList.add('active');
+        renderContactList(DUMMY_CONTACTS);
+    });
+
+    modalCloseButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            shareLocationModal.classList.remove('active');
+            contactSearchInput.value = ''; // Clear search
+            renderContactList(DUMMY_CONTACTS); // Reset list
+        });
+    });
+
+    contactSearchInput.addEventListener('input', filterContacts);
+    shareSelectedBtn.addEventListener('click', shareLocationWithSelected);
+}
+
+function renderContactList(contactsToRender) {
+    if (!contactListContainer) return;
+    contactListContainer.innerHTML = ''; // Clear existing list
+
+    if (contactsToRender.length === 0) {
+        contactListContainer.innerHTML = `<p style="text-align: center; color: var(--gray-300);">No contacts found.</p>`;
+        return;
+    }
+
+    contactsToRender.forEach(contact => {
+        const contactItem = document.createElement('div');
+        contactItem.className = 'contact-item';
+        contactItem.innerHTML = `
+            <input type="checkbox" id="contact-${contact.id}" value="${contact.id}">
+            <label for="contact-${contact.id}">${contact.name}</label>
+        `;
+        contactListContainer.appendChild(contactItem);
+    });
+}
+
+function filterContacts() {
+    const searchTerm = contactSearchInput.value.toLowerCase();
+    const filtered = DUMMY_CONTACTS.filter(contact =>
+        contact.name.toLowerCase().includes(searchTerm)
+    );
+    renderContactList(filtered);
+}
+
+function shareLocationWithSelected() {
+    const selectedContacts = Array.from(
+        contactListContainer.querySelectorAll('input[type="checkbox"]:checked')
+    ).map(checkbox => {
+        const contact = DUMMY_CONTACTS.find(c => c.id === checkbox.value);
+        return contact ? contact.name : null;
+    }).filter(Boolean); // Filter out any nulls
+
+    if (selectedContacts.length > 0) {
+        showToast(`Location shared with: ${selectedContacts.join(', ')}`, 'success');
+        console.log('Sharing location with:', selectedContacts);
+    } else {
+        showToast('Please select at least one contact to share.', 'warning');
+    }
+    shareLocationModal.classList.remove('active');
+    contactSearchInput.value = ''; // Clear search
+    renderContactList(DUMMY_CONTACTS); // Reset list
 }
 
 // Export for external use

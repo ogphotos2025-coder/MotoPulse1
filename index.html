@@ -145,6 +145,7 @@
                         <span>Mechanical Help</span>
                     </div>
                 </div>
+                <button id="share-location-btn" class="btn-share-location">Share Location</button>
             </div>
 
             <div id="map" class="map-container"></div>
@@ -188,6 +189,26 @@
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- Share Location Modal -->
+    <div id="share-location-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Location</h2>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="contact-search" class="contact-search" placeholder="Search contacts...">
+                <div id="contact-list" class="contact-list">
+                    <!-- Contacts will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="share-selected-btn" class="btn-primary">Share</button>
+                <button class="btn-secondary close-button">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAomi9ws2rw4I4q7Wqchx4EXnbXbX6fGEM"></script>
     <script src="app.js"></script>
