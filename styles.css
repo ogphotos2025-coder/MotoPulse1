@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap');
+
 :root {
-    /* Color Palette - Light & Motorcycle-Inspired */
-    --primary: #E65100; /* A vibrant, deep orange */
-    --primary-dark: #BF360C;
-    --primary-light: #FF6D00;
-    --secondary: #212121; /* Dark charcoal for text and primary elements */
-    --secondary-light: #424242;
-    --accent: #FFC107; /* Amber accent */
+    /* Color Palette - Dark & Patriotic Motorcycle Theme */
+    --primary: #B71C1C; /* A strong, deep red (American Flag Red) */
+    --primary-dark: #7F0000; /* Darker red */
+    --primary-light: #D32F2F; /* Lighter red */
+    --secondary: #E0E0E0; /* Light gray for text and primary elements on dark backgrounds */
+    --secondary-light: #BDBDBD;
+    --accent: #FFD700; /* Gold/Amber for accent, like chrome or a patriotic star */
     --success: #4CAF50;
     --warning: #FF9800;
     --danger: #D32F2F;
@@ -13,15 +15,15 @@
     /* Neutrals */
     --white: #FFFFFF;
     --off-white: #f8f9fa;
-    --gray-100: #F5F5F5; /* Lightest gray for backgrounds */
-    --gray-200: #EEEEEE;
-    --gray-300: #BDBDBD;
-    --gray-700: #616161;
-    --gray-900: #212121;
+    --gray-100: #303030; /* Darkest gray for backgrounds */
+    --gray-200: #424242;
+    --gray-300: #616161;
+    --gray-700: #BDBDBD;
+    --gray-900: #F5F5F5;
     
     /* Typography */
-    --font-display: 'Roboto Condensed', sans-serif; /* A more classic, rugged font */
-    --font-body: 'Work Sans', sans-serif;
+    --font-display: 'Oswald', sans-serif; /* A more bold, impactful font for titles */
+    --font-body: 'Roboto', sans-serif;
     
     /* Spacing */
     --space-xs: 0.5rem;
@@ -52,17 +54,19 @@
 
 body {
     font-family: var(--font-body);
-    background: var(--gray-100);
-    color: var(--secondary);
+    /* Dark, textured motorcycle-themed background */
+    background: #1a1a1a url('https://images.unsplash.com/photo-1550534272-d50711910609?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc5MzF8MHwxfHNlYXJjaHw3MHx8bW90b3JjeWNsZSUyMHBhdHJpb3RpY3xlbnwwfHx8fDE2NzI1MTEyMzY&ixlib=rb-4.0.3&q=80&w=1080') center center/cover no-repeat fixed;
+    background-blend-mode: multiply; /* Blend the background color with the image */
+    color: var(--secondary); /* Ensure text is visible on dark background */
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* Navigation */
 .nav {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: none;
-    border-bottom: 1px solid var(--gray-200);
+    background: rgba(0, 0, 0, 0.9); /* Darker navigation bar for the new theme */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray-700);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -118,10 +122,10 @@ body {
 
 @keyframes pulse {
     0%, 100% {
-        box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
+        box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.7);
     }
     50% {
-        box-shadow: 0 0 0 20px rgba(255, 69, 0, 0);
+        box-shadow: 0 0 0 20px rgba(183, 28, 28, 0);
     }
 }
 
@@ -131,14 +135,14 @@ body {
     font-weight: 900;
     letter-spacing: 2px;
     color: var(--primary);
-    text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+    text-shadow: 0 0 10px rgba(183, 28, 28, 0.5);
 }
 
 .logo-tagline {
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 400;
-    color: var(--gray-700);
+    color: var(--secondary-light); /* Adjusted for dark background */
     margin-left: var(--space-sm);
     white-space: nowrap;
     opacity: 0.8;
@@ -153,7 +157,7 @@ body {
     font-family: var(--font-display);
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--gray-700);
+    color: var(--secondary-light); /* Adjusted for dark background */
     text-decoration: none;
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-md);
@@ -186,12 +190,14 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    padding: var(--space-2xl) var(--space-lg);
+    padding: var(--space-xl) var(--space-lg); /* Adjusted padding for content */
     overflow: hidden;
-    min-height: 300px;
+    min-height: 700px; /* Increased height to accommodate the form */
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .hero-bg {
@@ -200,8 +206,11 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: none;
-    animation: heroShift 10s ease-in-out infinite alternate;
+    /* Placeholder for mountain road image */
+    background: url('https://images.unsplash.com/photo-1593922379373-c6c73f5a0e9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc5MzF8MHwxfHNlYXJjaHw3MHx8bW91bnRhaW4lMjByb2FkJTIwbW90b3JjeWNsZXxlbnwwfHx8fDE2NzI1MTEyMzY&ixlib=rb-4.0.3&q=80&w=1080') center center/cover no-repeat;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly lighter overlay for mountain scene */
+    animation: heroShift 15s ease-in-out infinite alternate;
 }
 
 @keyframes heroShift {
@@ -216,8 +225,12 @@ body {
 .hero-content {
     position: relative;
     text-align: center;
-    max-width: 800px;
+    max-width: 900px; /* Allow form to take more width */
     animation: fadeInUp 1s ease-out 0.3s both;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background for the form */
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
 }
 
 @keyframes fadeInUp {
@@ -247,7 +260,7 @@ body {
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: var(--gray-700);
+    color: var(--secondary); /* Changed to secondary for better contrast on dark hero */
     font-weight: 300;
     max-width: 600px;
     margin: 0 auto;
@@ -291,14 +304,14 @@ body {
     font-family: var(--font-display);
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--secondary);
+    color: var(--secondary); /* Ensure visibility on dark background */
     margin-bottom: var(--space-sm);
     letter-spacing: 1px;
 }
 
 .section-description {
     font-size: 1.1rem;
-    color: var(--gray-700);
+    color: var(--secondary-light); /* Changed for dark background visibility */
     font-weight: 300;
 }
 
@@ -343,26 +356,26 @@ body {
     font-family: var(--font-body);
     font-size: 1rem;
     padding: var(--space-md);
-    background: var(--gray-100);
-    border: 1px solid var(--gray-200);
+    background: var(--gray-200); /* Darker input background */
+    border: 1px solid var(--gray-300); /* Darker input border */
     border-radius: var(--radius-md);
-    color: var(--secondary);
+    color: var(--gray-900); /* Light text for dark input */
     transition: all 0.3s ease;
 }
 
 .form-group input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(230, 81, 0, 0.2);
+    box-shadow: 0 0 0 4px rgba(183, 28, 28, 0.2);
 }
 
 .form-group input::placeholder {
-    color: var(--gray-300);
+    color: var(--gray-700); /* Lighter placeholder for dark input */
 }
 
 .form-hint {
     font-size: 0.85rem;
-    color: var(--gray-300);
+    color: var(--gray-700);
     margin-top: var(--space-xs);
 }
 
@@ -468,7 +481,7 @@ body {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
+    box-shadow: 0 0 30px rgba(183, 28, 28, 0.5);
 }
 
 .btn-primary:active {
@@ -476,15 +489,16 @@ body {
 }
 
 .btn-secondary {
-    background: rgba(255, 193, 7, 0.2);
+    background: rgba(255, 215, 0, 0.2); /* Gold with transparency */
     color: var(--accent);
     border: 2px solid var(--accent);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 193, 7, 0.3);
+    background: rgba(255, 215, 0, 0.3); /* Lighter gold with transparency on hover */
     transform: translateY(-2px);
 }
+
 
 .btn-danger {
     background: var(--danger);
@@ -773,7 +787,7 @@ body {
     font-weight: 900;
     color: var(--primary);
     margin-bottom: var(--space-sm);
-    text-shadow: 0 0 20px rgba(230, 81, 0, 0.4);
+    text-shadow: 0 0 20px rgba(183, 28, 28, 0.4);
 }
 
 .stat-label {
@@ -971,7 +985,7 @@ body {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 3px solid rgba(255, 69, 0, 0.3);
+    border: 3px solid rgba(183, 28, 28, 0.3);
     border-radius: 50%;
     border-top-color: var(--primary);
     animation: spin 1s ease-in-out infinite;

@@ -1,5 +1,8 @@
 // MotoPulse App - Main JavaScript
 
+// Configuration
+const SMS_SERVER_URL = 'http://localhost:3000'; // URL for the SMS backend server
+
 // State Management
 const AppState = {
     currentRide: null,
@@ -187,6 +190,7 @@ function startCountdown() {
             // In production, this would trigger the Guardian automation
             if (!AppState.currentRide.alertSent) {
                 showToast('⚠️ Return time passed! Emergency contact would be notified.', 'warning');
+                sendEmergencySMS(AppState.currentRide); // Trigger SMS
                 AppState.currentRide.alertSent = true;
                 saveToStorage();
             }
@@ -200,6 +204,38 @@ function startCountdown() {
         document.getElementById('countdown').textContent = 
             `${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
+}
+
+// Function to send emergency SMS
+async function sendEmergencySMS(ride) {
+    if (!ride || !ride.emergencyContact) {
+        console.error('Cannot send SMS: Missing ride or emergency contact details.');
+        return;
+    }
+
+    const message = `URGENT: MotoPulse Alert! ${ride.riderName} (Bike: ${ride.bikeDetails || 'N/A'}) is OVERDUE for return at ${new Date(ride.returnTime).toLocaleTimeString()}. Last known status: ${ride.status}. Please check on them. Route: ${ride.routeUrl}`;
+
+    try {
+        const response = await fetch(`${SMS_SERVER_URL}/send-sms`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ to: ride.emergencyContact, message: message }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log('Emergency SMS sent successfully!');
+            showToast('Emergency SMS sent to contact!', 'success');
+        } else {
+            console.error('Failed to send emergency SMS:', result.message);
+            showToast(`Failed to send emergency SMS: ${result.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Error sending emergency SMS:', error);
+        showToast('Error sending emergency SMS. Check server.', 'error');
+    }
 }
 
 // Active Ride Panel Controls
