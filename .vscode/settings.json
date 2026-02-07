@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd \"/Users/bo/Desktop/MotoPulse/files \\(5\\)\" && git init$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
